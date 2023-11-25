@@ -1,0 +1,20 @@
+const twilio = require("twilio");
+const accountSid = "AC39b55fa1cdbc7c0153fc43a1969c121b";
+const authToken = "aa1597b9b50496cd41436dcf322073cd";
+const twilioClient = new twilio(accountSid, authToken);
+const sendOTP = (mobileNumber, otp) => {
+  console.log(`Sending OTP to: ${mobileNumber}`);
+  twilioClient.messages
+    .create({
+      body: `Your OTP is: ${otp}`,
+      from: "whatsapp:+14155238886", 
+      to: `whatsapp:${mobileNumber}`, 
+    })
+    .then((message) => {
+      console.log(`OTP sent to ${message.to}`);
+    })
+    .catch((error) => {
+      console.error(`Error sending OTP: ${error.message}`);
+    });
+};
+module.exports = sendOTP;
